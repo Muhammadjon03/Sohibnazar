@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xavfsizlik Uyini - Ichki Axborot Xavfsizligi Tahlimi</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --accent: #ec4899;
+            --accent-light: #f472b6;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-tertiary: #334155;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --border: #475569;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+                'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+                sans-serif;
+            background: linear-gradient(135deg, var(--bg-primary) 0%, #1a1f3a 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        header {
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border);
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-icon {
+            font-size: 1.75rem;
+        }
+
+        .stats-bar {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .stat {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            border-radius: 1rem;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: float 20s linear infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-tertiary);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #059669;
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+
+        /* Levels Section */
+        .levels-section {
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .levels-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .level-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 1rem;
+            padding: 2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .level-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+
+        .level-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(236, 72, 153, 0.2);
+        }
+
+        .level-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .level-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .level-icon {
+            font-size: 2.5rem;
+        }
+
+        .level-locked {
+            opacity: 0.5;
+            filter: grayscale(100%);
+        }
+
+        .level-locked .level-icon::after {
+            content: ' 🔒';
+            font-size: 1.5rem;
+            position: relative;
+            top: -0.5rem;
+        }
+
+        .level-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .level-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .level-progress {
+            background: var(--bg-tertiary);
+            border-radius: 0.5rem;
+            height: 8px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        .level-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            transition: width 0.3s ease;
+        }
+
+        .level-stats {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .level-footer {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: var(--bg-tertiary);
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--accent);
+            border: 1px solid var(--accent);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 200;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 1rem;
+            padding: 2rem;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .modal-close:hover {
+            transform: rotate(90deg);
+        }
+
+        .question {
+            margin-bottom: 2rem;
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .option {
+            background: var(--bg-primary);
+            border: 2px solid var(--border);
+            border-radius: 0.75rem;
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 1rem;
+            color: var(--text-primary);
+            text-align: left;
+        }
+
+        .option:hover {
+            border-color: var(--primary);
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        .option.selected {
+            border-color: var(--accent);
+            background: rgba(236, 72, 153, 0.1);
+        }
+
+        .option.correct {
+            border-color: var(--success);
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        .option.incorrect {
+            border-color: var(--danger);
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        .feedback {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 0.75rem;
+            font-weight: 500;
+        }
+
+        .feedback.success {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+            border: 1px solid #10b981;
+        }
+
+        .feedback.error {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+            border: 1px solid #ef4444;
+        }
+
+        /* Achievements Section */
+        .achievements-section {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .achievement {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem;
+            background: var(--bg-primary);
+            border-radius: 0.75rem;
+            text-align: center;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .achievement.unlocked {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(99, 102, 241, 0.1));
+            border-color: var(--success);
+        }
+
+        .achievement:hover {
+            transform: translateY(-4px);
+        }
+
+        .achievement-icon {
+            font-size: 2rem;
+            opacity: 0.4;
+        }
+
+        .achievement.unlocked .achievement-icon {
+            opacity: 1;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .achievement-name {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        /* Leaderboard */
+        .leaderboard-section {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 1rem;
+            padding: 2rem;
+        }
+
+        .leaderboard-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .leaderboard-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: var(--bg-primary);
+            border-radius: 0.75rem;
+            border: 1px solid var(--border);
+            transition: all 0.2s ease;
+        }
+
+        .leaderboard-item:hover {
+            border-color: var(--accent);
+        }
+
+        .leaderboard-rank {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex: 1;
+        }
+
+        .rank-position {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--accent);
+            min-width: 40px;
+            text-align: center;
+        }
+
+        .rank-position.gold {
+            color: #fbbf24;
+        }
+
+        .rank-position.silver {
+            color: #c0c0c0;
+        }
+
+        .rank-position.bronze {
+            color: #d97706;
+        }
+
+        .rank-name {
+            font-weight: 600;
+        }
+
+        .rank-points {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--primary);
+            min-width: 80px;
+            text-align: right;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .stats-bar {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 1rem;
+            }
+
+            .hero {
+                padding: 1.5rem;
+            }
+
+            .hero h1 {
+                font-size: 1.75rem;
+            }
+
+            .levels-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                margin: 1rem;
+                max-width: 90vw;
+            }
+
+            .achievements-grid {
+                grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+            }
+        }
+
+        /* Animations */
+        .points-float {
+            position: fixed;
+            font-weight: 700;
+            color: var(--accent);
+            pointer-events: none;
+            animation: floatUp 1s ease-out forwards;
+        }
+
+        @keyframes floatUp {
+            0% { 
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+            100% { 
+                opacity: 0;
+                transform: translateY(-60px) scale(0.8);
+            }
+        }
+
+        .shake {
+            animation: shake 0.5s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <span class="logo-icon">🛡️</span>
+            Xavfsizlik Uyini
+        </div>
+        <div class="stats-bar">
+            <div class="stat">
+                <span class="stat-label">Ballar</span>
+                <span class="stat-value" id="totalPoints">0</span>
+            </div>
+            <div class="stat">
+                <span class="stat-label">Daraja</span>
+                <span class="stat-value" id="level">1</span>
+            </div>
+            <div class="stat">
+                <span class="stat-label">Ketma-ketlik</span>
+                <span class="stat-value" id="streak">0🔥</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Hero Section -->
+        <div class="hero">
+            <div class="hero-content">
+                <h1>Ichki Axborot Xavfsizligini O'rganing</h1>
+                <p>Ushbu platforma orqali maslak taqlid qilish va xavfsizlik bo'yicha ballar to'plang</p>
+                <button class="btn btn-secondary" onclick="document.querySelector('.levels-section').scrollIntoView({behavior: 'smooth'})">
+                    Boshlash
+                </button>
+            </div>
+        </div>
+
+        <!-- Achievements Section -->
+        <div class="achievements-section">
+            <div class="section-title">🏆 Erishuvlar</div>
+            <div class="achievements-grid" id="achievementsGrid">
+                <!-- Achievements will be generated here -->
+            </div>
+        </div>
+
+        <!-- Levels Section -->
+        <div class="levels-section">
+            <div class="section-title">🎮 O'quv Darajalari</div>
+            <div class="levels-grid" id="levelsGrid">
+                <!-- Levels will be generated here -->
+            </div>
+        </div>
+
+        <!-- Leaderboard Section -->
+        <div class="leaderboard-section">
+            <div class="section-title">🏅 Reyting Taxtasi</div>
+            <div class="leaderboard-list" id="leaderboardList">
+                <!-- Leaderboard will be generated here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Challenge Modal -->
+    <div class="modal" id="challengeModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title" id="modalTitle">Savol</div>
+                <button class="modal-close" onclick="closeChallengeModal()">✕</button>
+            </div>
+            <div id="modalBody">
+                <!-- Challenge content will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Game State
+        const gameState = {
+            points: 0,
+            level: 1,
+            streak: 0,
+            completedLevels: [],
+            unlockedAchievements: [],
+            player: 'Siz'
+        };
+
+        // Levels Data
+        const levels = [
+            {
+                id: 1,
+                title: 'Parol Himoyasi',
+                icon: '🔐',
+                description: 'Kuchli parollar yaratish haqida o\'rganing',
+                completed: false,
+                progress: 0,
+                questions: [
+                    {
+                        text: 'Kuchli parol qaysi belgilarga ega bo\'lishi kerak?',
+                        options: [
+                            'Faqat raqamlar',
+                            'Katta harflar, kichik harflar, raqamlar va belgilar',
+                            'Faqat harflar',
+                            'Kamida 3 harfdan iborat'
+                        ],
+                        correct: 1
+                    },
+                    {
+                        text: 'Xavfsiz parol uzunligi qancha bo\'lishi kerak?',
+                        options: [
+                            'Kamida 6 ta belgi',
+                            'Kamida 8 ta belgi',
+                            'Kamida 16 ta belgi',
+                            'Istalgan uzunlik'
+                        ],
+                        correct: 1
+                    }
+                ]
+            },
+            {
+                id: 2,
+                title: 'Fishing Atakkalari',
+                icon: '🎣',
+                description: 'Fishing xatlarini aniqlash va oldini olish',
+                completed: false,
+                progress: 0,
+                questions: [
+                    {
+                        text: 'Fishing xati nima?',
+                        options: [
+                            'Baliq sotuvchi xati',
+                            'Shaxsiy maʼlumotni o\'g\'irlash uchun niyaylantirilgan aldamchi xat',
+                            'Rasmiy xat',
+                            'Tugʻma xat'
+                        ],
+                        correct: 1
+                    },
+                    {
+                        text: 'Fishing xatini aniqlashning belgilari?',
+                        options: [
+                            'Noaniq yuboruvchi',
+                            'Urgang havolalar',
+                            'Shoshqali habar',
+                            'Hammasini aniqlash mumkin'
+                        ],
+                        correct: 3
+                    }
+                ]
+            },
+            {
+                id: 3,
+                title: 'Maʼlumot Xavfsizligi',
+                icon: '📋',
+                description: 'Shaxsiy maʼlumotlarni himoya qiling',
+                completed: false,
+                progress: 0,
+                questions: [
+                    {
+                        text: 'Qaysi maʼlumotlar sirli hisoblansa?',
+                        options: [
+                            'Ism-familya',
+                            'Parol va PIN kod',
+                            'Email manzili',
+                            'Barcha yuqoridagilar'
+                        ],
+                        correct: 3
+                    },
+                    {
+                        text: 'Jamoat WiFi da qanday ishlashingiz kerak?',
+                        options: [
+                            'Moliyaviy maʼlumot kiriting',
+                            'VPN ishlatmaysiz',
+                            'VPN yoki xavfsiz ulanish ishlatish kerak',
+                            'Istalgan ulanma xavfli'
+                        ],
+                        correct: 2
+                    }
+                ]
+            },
+            {
+                id: 4,
+                title: 'Internet Xavfsizligi',
+                icon: '🌐',
+                description: 'Internet xavflaridan himoya qiling',
+                completed: false,
+                progress: 0,
+                questions: [
+                    {
+                        text: 'Malware nima?',
+                        options: [
+                            'Yomon email',
+                            'Kompyuterni zarar berish uchun mo\'ljallangan dastur',
+                            'Yomon veb-sayt',
+                            'Parol'
+                        ],
+                        correct: 1
+                    },
+                    {
+                        text: 'Noto\'g\'ri veb-sayt belgisini aniqlash qanday?',
+                        options: [
+                            'Sayt nomidan',
+                            'URL manzilining boshidagi "https" va qulfcha belgisi',
+                            'Sayt rangi',
+                            'Jami xush kelib tuyuladi'
+                        ],
+                        correct: 1
+                    }
+                ]
+            }
+        ];
+
+        // Achievements
+        const achievements = [
+            { id: 1, name: 'Boshlang\'ich', icon: '⭐️', description: 'Birinchi savollarga javob bering' },
+            { id: 2, name: 'Olov', icon: '🔥', description: '10 ta ketma-ketlik' },
+            { id: 3, name: 'Chempion', icon: '🏆', description: '100 ballni to\'plang' },
+            { id: 4, name: 'Daho', icon: '⚡', description: 'Hamma darajalirni yakunlang' },
+            { id: 5, name: 'Xavfsizlik Eksperi', icon: '🎯', description: '200 ballni to\'plang' },
+            { id: 6, name: 'Masterlar Boshligi', icon: '👑', description: 'Hamma quizlarni to\'g\'ri echish' }
+        ];
+
+        // Initialize Game
+        function initGame() {
+            renderLevels();
+            renderAchievements();
+            renderLeaderboard();
+        }
+
+        // Render Levels
+        function renderLevels() {
+            const grid = document.getElementById('levelsGrid');
+            grid.innerHTML = '';
+
+            levels.forEach(level => {
+                const levelCard = document.createElement('div');
+                levelCard.className = `level-card ${gameState.level < level.id ? 'level-locked' : ''}`;
+                
+                const progress = gameState.completedLevels.includes(level.id) ? 100 : 0;
+                
+                levelCard.innerHTML = `
+                    <div class="level-header">
+                        <div class="level-icon">${level.icon}</div>
+                        <div>${gameState.completedLevels.includes(level.id) ? '✓' : ''}</div>
+                    </div>
+                    <div class="level-title">${level.title}</div>
+                    <div class="level-description">${level.description}</div>
+                    <div class="level-progress">
+                        <div class="level-progress-bar" style="width: ${progress}%"></div>
+                    </div>
+                    <div class="level-stats">
+                        <span>${level.questions.length} savol</span>
+                        <span>${progress}% to'ldirildi</span>
+                    </div>
+                    <div class="level-footer">
+                        ${gameState.level >= level.id ? 
+                            `<button class="btn btn-primary" onclick="startChallenge(${level.id})" style="flex: 1;">Boshlash</button>` :
+                            `<span class="badge">Bloklangan</span>`
+                        }
+                    </div>
+                `;
+                
+                grid.appendChild(levelCard);
+            });
+        }
+
+        // Render Achievements
+        function renderAchievements() {
+            const grid = document.getElementById('achievementsGrid');
+            grid.innerHTML = '';
+
+            achievements.forEach(achievement => {
+                const isUnlocked = gameState.unlockedAchievements.includes(achievement.id);
+                const div = document.createElement('div');
+                div.className = `achievement ${isUnlocked ? 'unlocked' : ''}`;
+                div.title = achievement.description;
+                div.innerHTML = `
+                    <div class="achievement-icon">${achievement.icon}</div>
+                    <div class="achievement-name">${achievement.name}</div>
+                `;
+                grid.appendChild(div);
+            });
+        }
+
+        // Render Leaderboard
+        function renderLeaderboard() {
+            const list = document.getElementById('leaderboardList');
+            const leaderboard = [
+                { name: 'Sohibnazar', points: gameState.points },
+                { name: 'Muhammadjon', points: 250 },
+                { name: 'Nozimjon', points: 180 },
+                { name: 'Shodruz', points: 150 },
+                { name: 'Shohzod', points: 120 }
+            ];
+
+            list.innerHTML = leaderboard.map((item, index) => {
+                let rankClass = '';
+                if (index === 0) rankClass = 'gold';
+                else if (index === 1) rankClass = 'silver';
+                else if (index === 2) rankClass = 'bronze';
+
+                return `
+                    <div class="leaderboard-item">
+                        <div class="leaderboard-rank">
+                            <div class="rank-position ${rankClass}">${index + 1}</div>
+                            <div class="rank-name">${item.name}</div>
+                        </div>
+                        <div class="rank-points">${item.points}</div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Start Challenge
+        function startChallenge(levelId) {
+            const level = levels.find(l => l.id === levelId);
+            if (!level) return;
+
+            const question = level.questions[0];
+            const modal = document.getElementById('challengeModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalBody = document.getElementById('modalBody');
+
+            modalTitle.textContent = level.title;
+            modalBody.innerHTML = `
+                <div class="question">
+                    <div class="question-text">${question.text}</div>
+                    <div class="options">
+                        ${question.options.map((option, index) => `
+                            <button class="option" onclick="selectAnswer(${levelId}, 0, ${index})">
+                                ${option}
+                            </button>
+                        `).join('')}
+                    </div>
+                    <div id="feedback"></div>
+                </div>
+            `;
+
+            modal.classList.add('active');
+            window.currentChallenge = { levelId, questionIndex: 0 };
+        }
+
+        // Select Answer
+        function selectAnswer(levelId, questionIndex, optionIndex) {
+            const level = levels.find(l => l.id === levelId);
+            const question = level.questions[questionIndex];
+            const feedback = document.getElementById('feedback');
+            const options = document.querySelectorAll('.option');
+
+            const isCorrect = optionIndex === question.correct;
+
+            options[optionIndex].classList.add(isCorrect ? 'correct' : 'incorrect');
+            options.forEach((opt, idx) => {
+                opt.style.pointerEvents = 'none';
+            });
+
+            if (isCorrect) {
+                feedback.className = 'feedback success';
+                feedback.textContent = '✓ To\'g\'ri! +10 ball';
+                addPoints(10);
+                
+                if (questionIndex < level.questions.length - 1) {
+                    setTimeout(() => {
+                        nextQuestion(levelId, questionIndex + 1);
+                    }, 1500);
+                } else {
+                    completLevel(levelId);
+                }
+            } else {
+                feedback.className = 'feedback error';
+                feedback.textContent = '✗ Noto\'g\'ri. Qayta urinib ko\'ring';
+                gameState.streak = 0;
+                updateHeader();
+            }
+        }
+
+        // Next Question
+        function nextQuestion(levelId, questionIndex) {
+            const level = levels.find(l => l.id === levelId);
+            const question = level.questions[questionIndex];
+            const modalBody = document.getElementById('modalBody');
+
+            modalBody.innerHTML = `
+                <div class="question">
+                    <div class="question-text">(${questionIndex + 1}/${level.questions.length}) ${question.text}</div>
+                    <div class="options">
+                        ${question.options.map((option, index) => `
+                            <button class="option" onclick="selectAnswer(${levelId}, ${questionIndex}, ${index})">
+                                ${option}
+                            </button>
+                        `).join('')}
+                    </div>
+                    <div id="feedback"></div>
+                </div>
+            `;
+        }
+
+        // Complete Level
+        function completLevel(levelId) {
+            if (!gameState.completedLevels.includes(levelId)) {
+                gameState.completedLevels.push(levelId);
+                addPoints(50);
+                gameState.streak++;
+                
+                // Unlock next level
+                if (gameState.level === levelId) {
+                    gameState.level++;
+                }
+
+                // Check achievements
+                checkAchievements();
+                updateHeader();
+                renderLevels();
+            }
+
+            setTimeout(() => {
+                closeChallengeModal();
+            }, 1000);
+        }
+
+        // Check Achievements
+        function checkAchievements() {
+            if (gameState.points >= 100 && !gameState.unlockedAchievements.includes(3)) {
+                unlockAchievement(3);
+            }
+            if (gameState.streak >= 10 && !gameState.unlockedAchievements.includes(2)) {
+                unlockAchievement(2);
+            }
+            if (gameState.completedLevels.length >= 1 && !gameState.unlockedAchievements.includes(1)) {
+                unlockAchievement(1);
+            }
+            if (gameState.completedLevels.length === levels.length && !gameState.unlockedAchievements.includes(4)) {
+                unlockAchievement(4);
+            }
+            if (gameState.points >= 200 && !gameState.unlockedAchievements.includes(5)) {
+                unlockAchievement(5);
+            }
+        }
+
+        // Unlock Achievement
+        function unlockAchievement(id) {
+            gameState.unlockedAchievements.push(id);
+            const achievement = achievements.find(a => a.id === id);
+            showNotification(` Erishuv Ochildi: ${achievement.name}!`);
+            renderAchievements();
+            addPoints(20);
+        }
+
+        // Add Points
+        function addPoints(points) {
+            gameState.points += points;
+            
+            // Floating animation
+            const modal = document.getElementById('challengeModal');
+            const rect = modal.querySelector('.modal-content').getBoundingClientRect();
+            const floatingEl = document.createElement('div');
+            floatingEl.className = 'points-float';
+            floatingEl.textContent = `+${points}`;
+            floatingEl.style.left = (rect.left + rect.width / 2) + 'px';
+            floatingEl.style.top = (rect.top + rect.height / 2) + 'px';
+            document.body.appendChild(floatingEl);
+            
+            setTimeout(() => floatingEl.remove(), 1000);
+        }
+
+        // Update Header
+        function updateHeader() {
+            document.getElementById('totalPoints').textContent = gameState.points;
+            document.getElementById('level').textContent = gameState.level;
+            document.getElementById('streak').textContent = gameState.streak + '🔥';
+        }
+
+        // Close Challenge Modal
+        function closeChallengeModal() {
+            document.getElementById('challengeModal').classList.remove('active');
+            renderLeaderboard();
+        }
+
+        // Show Notification
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: linear-gradient(135deg, #10b981, #059669);
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 0.5rem;
+                font-weight: 600;
+                z-index: 300;
+                animation: slideIn 0.3s ease;
+            `;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => notification.remove(), 300);
+            }, 2000);
+        }
+
+        // Start Game
+        initGame();
+    </script>
+</body>
+</html>
